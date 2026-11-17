@@ -120,11 +120,25 @@ function draw(
   ctx.fillStyle = colors.background;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-  // Booth awning.
+  // Candy-cane trim and a string of warm workshop lights.
   const stripe = WIDTH / 16;
   for (let i = 0; i < 16; i++) {
     ctx.fillStyle = i % 2 === 0 ? colors.stripeA : colors.stripeB;
     ctx.fillRect(i * stripe, 0, stripe, 40);
+  }
+
+  ctx.strokeStyle = colors.wood;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, 46);
+  ctx.quadraticCurveTo(WIDTH / 2, 85, WIDTH, 46);
+  ctx.stroke();
+  for (let i = 0; i < 17; i++) {
+    const u = i / 16;
+    ctx.fillStyle = colors.accent;
+    ctx.beginPath();
+    ctx.arc(u * WIDTH, 46 + 78 * u * (1 - u), 3, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   for (const rail of RAILS) {
@@ -133,21 +147,32 @@ function draw(
   }
 
   for (const target of state.targets) {
-    ctx.fillStyle = colors.stripeB;
+    // Christmas ornaments retain the original circular hit areas.
+    ctx.fillStyle = colors.accent;
+    ctx.fillRect(target.x - 5, target.y - target.radius - 6, 10, 7);
+    ctx.fillStyle = target.speed < 0 ? colors.water : colors.stripeA;
     ctx.beginPath();
     ctx.arc(target.x, target.y, target.radius, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = colors.stripeA;
+    ctx.strokeStyle = colors.accent;
+    ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.arc(target.x, target.y, target.radius * 0.6, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.moveTo(target.x - target.radius + 3, target.y);
+    ctx.lineTo(target.x + target.radius - 3, target.y);
+    ctx.stroke();
     ctx.fillStyle = colors.stripeB;
     ctx.beginPath();
-    ctx.arc(target.x, target.y, target.radius * 0.25, 0, Math.PI * 2);
+    ctx.arc(
+      target.x - target.radius * 0.3,
+      target.y - target.radius * 0.4,
+      target.radius * 0.18,
+      0,
+      Math.PI * 2,
+    );
     ctx.fill();
   }
 
-  ctx.fillStyle = '#4fc3f7';
+  ctx.fillStyle = colors.stripeB;
   for (const shot of state.shots) {
     ctx.beginPath();
     ctx.arc(shot.x, shot.y, 5, 0, Math.PI * 2);
@@ -182,7 +207,7 @@ function draw(
   ctx.textAlign = 'left';
   ctx.fillText(`Score ${state.score}`, 16, HEIGHT - 20);
   ctx.textAlign = 'right';
-  ctx.fillText(`Water ${state.tank}/${TANK_SIZE}`, WIDTH - 16, HEIGHT - 20);
+  ctx.fillText(`Snowballs ${state.tank}/${TANK_SIZE}`, WIDTH - 16, HEIGHT - 20);
 
   if (state.phase === 'over') {
     ctx.fillStyle = colors.background;
@@ -192,7 +217,7 @@ function draw(
     ctx.textAlign = 'center';
     ctx.fillStyle = colors.accent;
     ctx.font = canvasFont('title', 'bold');
-    ctx.fillText(`Tank empty! You scored ${state.score}`, WIDTH / 2, HEIGHT / 2);
+    ctx.fillText(`Nice throwing! You scored ${state.score}`, WIDTH / 2, HEIGHT / 2);
     ctx.fillStyle = colors.text;
     ctx.font = canvasFont('body');
     ctx.fillText('Click to play again', WIDTH / 2, HEIGHT / 2 + 40);
@@ -201,8 +226,9 @@ function draw(
 
 export const waterCannon: CarnivalGame = {
   id: 'water-cannon',
-  name: 'Water Cannon',
-  description: 'Soak the targets before your tank runs dry. Faster targets score more.',
+  name: 'Snowball Workshop',
+  description:
+    'Help the elves test their moving ornament targets. Throw 15 snowballs; faster targets earn more points.',
 
   start(canvas) {
     const ctx = canvas.getContext('2d');

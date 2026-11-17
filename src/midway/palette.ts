@@ -3,27 +3,27 @@ import { theme } from '../carnival';
 const { colors } = theme;
 
 /**
- * The midway map's daytime palette. Tent reds, creams and golds come from the
- * carnival theme; the sky, grass, paths and other scenery shades only the map
- * uses live here.
+ * The North Pole's winter palette. Legacy ground keys remain compatible with
+ * the existing map: grass is fresh snow, paths are packed snow, and hedges
+ * are evergreen boundaries capped with snow.
  */
 export const palette = {
-  sky: '#38b4e6',
-  skyHigh: '#1f9bd6',
-  cloud: '#bfeafc',
-  cloudShade: '#94d8f4',
-  haze: '#5fc3b8',
+  sky: '#193e51',
+  skyHigh: '#081e34',
+  cloud: '#8baebf',
+  cloudShade: '#668d9f',
+  haze: '#b2cad6',
 
-  grass: '#a5c43a',
-  grassDark: '#8aab2a',
-  grassEdge: '#7a9a22',
-  grassLight: '#b6d24c',
-  path: '#f3e28e',
-  pathShade: '#e2cd70',
-  hedge: '#6f9a2c',
-  hedgeDark: '#5a8122',
-  hedgeLight: '#86b236',
-  shadow: 'rgba(60, 90, 10, 0.28)',
+  grass: '#d4e5ed',
+  grassDark: '#b9d1df',
+  grassEdge: '#acc5d4',
+  grassLight: '#edf5f7',
+  path: '#b1cbd5',
+  pathShade: '#92b1c2',
+  hedge: '#215b50',
+  hedgeDark: '#163f3d',
+  hedgeLight: '#4b8270',
+  shadow: 'rgba(24, 61, 82, 0.20)',
 
   red: colors.stripeA,
   redShade: '#b8283a',

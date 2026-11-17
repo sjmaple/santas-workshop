@@ -272,3 +272,108 @@ kbd {
   cursor: crosshair;
   touch-action: none;
 }
+
+/* A quiet winter masthead and warm brass-trimmed workshop panels. */
+.awning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 19px 28px;
+  clip-path: none;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-accent);
+  box-shadow: 0 4px 24px #071e3030;
+  z-index: 1;
+}
+.brand {
+  padding: 0;
+  font-family: Georgia, serif;
+  font-size: 29px;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+.brand-star {
+  color: var(--color-accent);
+  margin-right: 9px;
+}
+.brand-subtitle {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+}
+.midway-help,
+.midway-guide,
+.midway-credit,
+.booth-card {
+  border-width: 1px;
+  box-shadow: 0 6px 22px #0b28322a;
+  backdrop-filter: blur(12px);
+}
+.midway-credit {
+  padding: 12px 16px;
+  line-height: 1.6;
+}
+.midway-credit strong {
+  color: var(--color-accent);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.midway-guide {
+  padding: 15px 18px;
+}
+.midway-guide h2 {
+  color: var(--color-accent);
+  margin-bottom: 9px;
+}
+.midway-guide a {
+  flex-direction: column;
+  gap: 4px;
+}
+.midway-guide .best {
+  font-size: 12px;
+}
+.booth-card {
+  bottom: 24px;
+}
+.booth-card h2 {
+  font-family: Georgia, serif;
+}
+.booth-card .description {
+  line-height: 1.5;
+}
+.game-instructions {
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 5px;
+}
+@media (max-width: 720px) {
+  .awning {
+    padding: 14px 16px;
+  }
+  .brand {
+    font-size: 23px;
+  }
+  .brand-subtitle {
+    display: none;
+  }
+  .midway-guide {
+    top: 12px;
+    right: 12px;
+    padding: 10px 12px;
+  }
+  .midway-help {
+    display: block;
+    left: 12px;
+    bottom: 12px;
+    right: 12px;
+    max-width: none;
+    font-size: 12px;
+  }
+  .booth-card {
+    bottom: 86px;
+  }
+}
