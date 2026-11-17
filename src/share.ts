@@ -1,8 +1,8 @@
 /** The original carnival, where anyone can fork their own. */
-export const REPO_URL = 'https://github.com/tesslio/tessl-carnival';
+export const REPO_URL = 'https://github.com/sjmaple/santas-workshop';
 
 const SHARE_TEXT =
-  'I built a software factory on a browser carnival at AI DevCon NYC with @tessl_io. Play my carnival:';
+  'Visit Santa’s snowy North Pole workshop, built with @tessl_io. Play the Christmas challenge:';
 
 /**
  * The address to share for the carnival at `href`: the page itself, without

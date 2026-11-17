@@ -1,3 +1,43 @@
+# Santa’s Workshop
+
+![Santa and the elves in the snowy North Pole village](docs/north-pole.png)
+
+A Christmas transformation of [Tessl Carnival](https://github.com/tesslio/tessl-carnival).
+Walk Santa through a snowy North Pole village, meet the elves, and play Snowball
+Workshop. Toy Making, Sleigh Mechanic and Reindeer Stable are scenic stations;
+the challenge directory links to playable games. New registered games still
+receive a workshop cabin automatically.
+
+## Play locally
+
+Use Node 22.13+ (excluding 23) or Node 24+.
+
+```sh
+npm ci
+npm run dev
+```
+
+Walk with WASD or arrow keys, or click/tap a destination. Click a station to
+walk to it; press E, Enter or Space when near the playable workshop. The
+challenge directory also opens the game directly. Aim and click/tap to throw
+15 snowballs; faster moving targets score more. Scores remain in local storage,
+including existing scores on the `water-cannon` route. Return to the village
+with the North Pole link. Reduced-motion preferences freeze ambient animation.
+
+## Validation
+
+```sh
+npm run format
+npm run check
+npm run build
+```
+
+No additional runtime dependencies or remote assets are required. This fork
+has not been deployed. The inherited workshop and factory documentation below
+remains available for developers of the original starter.
+
+---
+
 # Tessl Carnival
 
 [![AI DevCon NYC, 2 to 4 November 2026](https://img.shields.io/badge/AI%20DevCon%20NYC-2--4%20Nov%202026-e63946)](https://tessl.io/devcon?utm_source=github&utm_medium=readme&utm_campaign=tessl-carnival)

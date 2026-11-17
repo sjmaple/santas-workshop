@@ -1,4 +1,5 @@
 import './style.css';
+import { stationFor } from './midway/stations';
 import { applyTheme, bestScore, type CarnivalGame } from './carnival';
 import { registry } from './games';
 import { startMidway } from './midway/midway';
@@ -19,18 +20,16 @@ function renderMidway() {
   document.body.dataset.view = 'midway';
   app.innerHTML = `
     <section class="midway">
-      <canvas class="midway-map" aria-label="The carnival midway. Walk up to a booth to play its game."></canvas>
+      <canvas class="midway-map" aria-label="Santa’s North Pole workshop. Walk Santa to a station, or use the challenge link to play."></canvas>
       <p class="midway-help">
         <kbd>WASD</kbd> or <kbd>arrows</kbd> to walk, or click where you want to go.
         <kbd>E</kbd> to play.
       </p>
       <p class="midway-credit">
-        Built with
-        <a href="https://tessl.io/?utm_source=carnival&amp;utm_medium=midway-credit&amp;utm_campaign=tessl-carnival" target="_blank" rel="noopener">Tessl</a>
-        at
-        <a href="https://tessl.io/devcon?utm_source=carnival&amp;utm_medium=midway-credit&amp;utm_campaign=tessl-carnival" target="_blank" rel="noopener">AI DevCon NYC</a>
+        <strong>CHRISTMAS EVE CREW</strong><br>
+        You’re Santa. The elves are counting on you.
         <span class="midway-links">
-          <a href="${REPO_URL}" target="_blank" rel="noopener">Build your own</a>
+          <a href="${REPO_URL}" target="_blank" rel="noopener">View source</a>
           <span class="midway-share" hidden>
             · Share on
             <a class="share-x" target="_blank" rel="noopener">X</a>
@@ -39,8 +38,8 @@ function renderMidway() {
           </span>
         </span>
       </p>
-      <nav class="midway-guide" aria-label="Booths">
-        <h2>Booths</h2>
+      <nav class="midway-guide" aria-label="Workshop challenges">
+        <h2>Workshop challenges</h2>
         <ul></ul>
       </nav>
       <div class="booth-card" aria-live="polite" hidden>
@@ -73,9 +72,9 @@ function renderMidway() {
     const game = booth?.gameId ? registry.get(booth.gameId) : undefined;
     card.hidden = booth === undefined;
     card.classList.toggle('closed', booth !== undefined && !game);
-    card.querySelector('h2')!.textContent = game?.name ?? 'Coming soon';
+    card.querySelector('h2')!.textContent = game?.name ?? stationFor(booth?.index ?? 0).name;
     card.querySelector('.description')!.textContent =
-      game?.description ?? 'This booth is waiting for a game. Build one and it opens here.';
+      game?.description ?? stationFor(booth?.index ?? 0).description;
     card.querySelector('.best')!.textContent = game ? bestText(game) : '';
     const link = card.querySelector<HTMLAnchorElement>('.play')!;
     link.hidden = !game;
@@ -95,10 +94,10 @@ function renderGame(game: CarnivalGame) {
   app.innerHTML = `
     <section class="game">
       <div class="game-header">
-        <a href="#/">← Back to the midway</a>
+        <a href="#/">← Back to the North Pole</a>
         <h1></h1>
       </div>
-      <canvas></canvas>
+      <p class="game-instructions">Aim with your mouse or finger. Click or tap to throw a snowball. You have 15 throws; faster targets earn more points.</p><canvas aria-label="Snowball Workshop game"></canvas>
     </section>`;
   app.querySelector('h1')!.textContent = game.name;
   stop = game.start(app.querySelector('canvas')!);

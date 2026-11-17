@@ -4,11 +4,11 @@
  */
 export const theme = {
   colors: {
-    background: '#1b1035',
-    surface: '#2a1a52',
+    background: '#102d37',
+    surface: '#1c4550',
     text: '#fff8e7',
-    muted: '#b9a9d9',
-    accent: '#ffcc33',
+    muted: '#bdd1d3',
+    accent: '#f6cf81',
     danger: '#ff5a5f',
     stripeA: '#e63946',
     stripeB: '#fff8e7',

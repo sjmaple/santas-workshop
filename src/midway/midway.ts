@@ -1,8 +1,10 @@
+import { stationFor } from './stations';
 import { palette } from './palette';
 import {
   archBounds,
   BOOTH_SIGN_HEIGHT,
   boothBounds,
+  drawSnow,
   drawArch,
   drawBooth,
   drawBunting,
@@ -68,8 +70,6 @@ const MOVE_KEYS: Record<string, [number, number]> = {
   KeyD: [1, 0],
 };
 const PLAY_KEYS = new Set(['KeyE', 'Enter', 'Space']);
-const DEVCON_URL =
-  'https://tessl.io/devcon?utm_source=carnival&utm_medium=midway-billboard&utm_campaign=tessl-carnival';
 const MIN_QUALITY = 0.5;
 
 /** Where the player stood when they last left the midway, for this page load. */
@@ -88,7 +88,7 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
       depth: booth.x + booth.y + 2,
       box: boothBounds(booth),
       booth,
-      name: booth.gameId ? (names.get(booth.gameId) ?? booth.gameId) : 'Coming soon',
+      name: booth.gameId ? (names.get(booth.gameId) ?? booth.gameId) : stationFor(booth.index).name,
     })),
     ...map.props.map((prop) => ({
       depth: prop.x + prop.y + (prop.w + prop.h) / 2,
@@ -179,13 +179,6 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
       })
       .sort((a, b) => b.x + b.y - (a.x + a.y))[0];
 
-  const billboardAt = (point: Point) =>
-    map.props.some((prop) => {
-      if (prop.kind !== 'billboard') return false;
-      const b = propBounds(prop);
-      return point.x >= b.left && point.x <= b.right && point.y >= b.top && point.y <= b.bottom;
-    });
-
   const walkToBooth = (booth: BoothSlot) => {
     player.path = pathToBooth(map, player, booth) ?? [];
     destination = player.path.at(-1);
@@ -194,10 +187,6 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
   const onPointerDown = (event: PointerEvent) => {
     const point = toWorld(event);
     const booth = boothAt(point);
-    if (!booth && billboardAt(point)) {
-      window.open(DEVCON_URL, '_blank', 'noopener');
-      return;
-    }
     if (booth) {
       if (booth === inReach) play(booth);
       else walkToBooth(booth);
@@ -211,7 +200,7 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
   };
   const onPointerMove = (event: PointerEvent) => {
     const point = toWorld(event);
-    canvas.style.cursor = boothAt(point) || billboardAt(point) ? 'pointer' : 'default';
+    canvas.style.cursor = boothAt(point) ? 'pointer' : 'default';
   };
 
   window.addEventListener('keydown', onKeyDown);
@@ -236,7 +225,7 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
     }
     for (const f of floaters) {
       f.age += dt;
-      f.y -= 22 * dt;
+      f.y += 12 * dt;
     }
     floaters.splice(0, floaters.length, ...floaters.filter((f) => f.age < 6));
   };
@@ -378,6 +367,9 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
     drawBunting(ctx, map, t, visible);
     drawFloaters(ctx, floaters);
 
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawSnow(ctx, canvas.clientWidth, canvas.clientHeight, t);
+
     // The prompt over the booth in reach, at full resolution.
     if (inReach?.gameId) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -430,7 +422,7 @@ export function startMidway(canvas: HTMLCanvasElement, options: MidwayOptions): 
 
     updateFloaters(dt);
     updateCamera(dt);
-    draw(time / 1000);
+    draw(calm ? 0 : time / 1000);
     frame = requestAnimationFrame(loop);
   };
   frame = requestAnimationFrame(loop);

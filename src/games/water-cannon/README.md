@@ -1,11 +1,11 @@
-# Water Cannon
+# Snowball Workshop
 
-Soak the targets on the three rails before your tank runs dry.
+Help the elves test their moving ornament targets with 15 snowballs.
 
 ## How to play
 
-- Move the mouse to aim the cannon, and click to fire a shot of water.
-- You have 15 shots. The game ends when the tank is empty and the last shot has landed.
+- Move the mouse to aim the launcher, and click (or tap) to throw a snowball.
+- You have 15 shots. The game ends when the snowballs run out and the last shot has landed.
 - Click again on the game over screen to play another round.
 
 ## Scoring
@@ -18,12 +18,10 @@ Each target scores 10 points for every 60 px/s of speed, rounded up:
 | Middle | 120 px/s | 20     |
 | Bottom | 60 px/s  | 10     |
 
-Your final score is saved to the carnival's score board when the game ends.
+Your final score is saved to the workshop’s score board when the game ends.
 
-## Options
-
-Add `?shots=25` to the page URL to change the size of the tank, for example
-`http://localhost:5173/?shots=25#/play/water-cannon`.
+The existing `water-cannon` route and score key are preserved, so old bookmarks
+and personal bests continue to work.
 
 ## Files
 
